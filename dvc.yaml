@@ -1,3 +1,15 @@
 stages:
   prepare:
-    cmd: \
+    cmd: python src/prepare.py
+    deps:
+    - src/prepare.py
+    - data/california_housing.csv
+    outs:
+    - data/prepared
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/prepared/train.csv
+    - src/train.py
+    outs:
+    - models/model.pkl
