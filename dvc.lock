@@ -1,0 +1,19 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/california_housing.csv
+      hash: md5
+      md5: fa9fe4cf24f70b69ac65fb33062ddf34
+      size: 1915795
+    - path: src/prepare.py
+      hash: md5
+      md5: 6a2162e1a06125fec7a03f90cd6aba30
+      size: 303
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: e5e2dd60443344d5c1785611be2d8b36.dir
+      size: 1910089
+      nfiles: 1
