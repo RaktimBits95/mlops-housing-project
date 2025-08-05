@@ -2,14 +2,26 @@ stages:
   prepare:
     cmd: python src/prepare.py
     deps:
-    - src/prepare.py
-    - data/california_housing.csv
+      - src/prepare.py
+      - data/california_housing.csv
     outs:
-    - data/prepared
+      - data/prepared
+
   train:
     cmd: python src/train.py
     deps:
-    - data/prepared/train.csv
-    - src/train.py
+      - data/prepared/train.csv
+      - src/train.py
     outs:
-    - models/model.pkl
+      - models/model_LinearRegression.pkl
+      - models/model_DecisionTree.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - data/prepared/test.csv
+      - models/model_LinearRegression.pkl
+      - models/model_DecisionTree.pkl
+      - src/evaluate.py
+    outs:
+      - metrics.txt

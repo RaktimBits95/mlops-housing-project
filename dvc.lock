@@ -9,11 +9,55 @@ stages:
       size: 1915795
     - path: src/prepare.py
       hash: md5
-      md5: 6a2162e1a06125fec7a03f90cd6aba30
-      size: 303
+      md5: 07eb395b8ce42ac131b5bef435fedc5f
+      size: 485
     outs:
     - path: data/prepared
       hash: md5
-      md5: e5e2dd60443344d5c1785611be2d8b36.dir
-      size: 1910089
-      nfiles: 1
+      md5: 87472d804ce22f08b02ca1cf93eefa7d.dir
+      size: 1910176
+      nfiles: 2
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/prepared/train.csv
+      hash: md5
+      md5: aee62e66e0244752512958031858ad16
+      size: 1528660
+    - path: src/train.py
+      hash: md5
+      md5: 1f2827f94d67c74823694cf545f92b98
+      size: 1593
+    outs:
+    - path: models/model_DecisionTree.pkl
+      hash: md5
+      md5: 2200babd6774119dd40ec57dd4173eac
+      size: 6017
+    - path: models/model_LinearRegression.pkl
+      hash: md5
+      md5: 56a4abe0af4b735ee792c68d6dd16727
+      size: 1033
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/prepared/test.csv
+      hash: md5
+      md5: a489c05f398234f7e308988cc5647fb5
+      size: 381516
+    - path: models/model_DecisionTree.pkl
+      hash: md5
+      md5: 2200babd6774119dd40ec57dd4173eac
+      size: 6017
+    - path: models/model_LinearRegression.pkl
+      hash: md5
+      md5: 56a4abe0af4b735ee792c68d6dd16727
+      size: 1033
+    - path: src/evaluate.py
+      hash: md5
+      md5: 3b2ee2db223a53e6dd97b7afb01af187
+      size: 661
+    outs:
+    - path: metrics.txt
+      hash: md5
+      md5: d621106e69fa0882feef6be4bb421645
+      size: 58

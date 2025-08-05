@@ -1,0 +1,6 @@
+prepare:
+  test_size: 0.2
+  random_state: 42
+
+train:
+  alpha: 1.0
