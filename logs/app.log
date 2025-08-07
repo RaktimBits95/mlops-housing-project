@@ -1,0 +1,2 @@
+2025-08-07 13:12:49,909 - INFO - Prediction input: {'MedInc': 10000.0, 'HouseAge': 50.0, 'AveRooms': 5.0, 'AveBedrms': 5.0, 'Population': 10.0, 'AveOccup': 10.0, 'Latitude': 50.0, 'Longitude': 50.0}
+2025-08-07 13:12:49,910 - INFO - Predicted price: 2.9623019999999998

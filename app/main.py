@@ -4,6 +4,18 @@ from pydantic import BaseModel
 import joblib
 import numpy as np
 import os
+import uvicorn
+import logging
+from datetime import datetime
+
+# Setup logging
+LOG_DIR = "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+logging.basicConfig(
+    filename=os.path.join(LOG_DIR, "app.log"),
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # Define FastAPI app
 app = FastAPI(title="Housing Price Predictor")
@@ -27,7 +39,7 @@ class HouseData(BaseModel):
 
 @app.get("/", response_class=HTMLResponse)
 def root():
-    with open("app/index.html", "r") as f:
+    with open("app/index.html", "r" , encoding='utf-8') as f:
         return f.read()
 
 @app.post("/predict")
@@ -38,6 +50,21 @@ def predict(data: HouseData):
             data.Population, data.AveOccup, data.Latitude, data.Longitude
         ]])
         prediction = model.predict(input_data)[0]
+
+        # 🔧 Log input and output
+        logging.info(f"Prediction input: {data.dict()}")
+        logging.info(f"Predicted price: {prediction}")
+
+
         return {"predicted_price": prediction}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.get("/metrics")
+def metrics():
+    return {
+        "model_loaded": True,
+        "model_path": MODEL_PATH,
+        "log_file": os.path.abspath(os.path.join(LOG_DIR, "app.log"))
+    }
